@@ -12,7 +12,7 @@
 
 Inspired by David Jurgens' [HelpPC Reference Library](https://noami.us/helppc/index.html) and my desire to practice 8086 assembly language like it was 1986 :)
 
-## Progress
+## Progress...
 
 *N.B.* Implemented on an ad hoc basis as the need(s) arise:
 
