@@ -1,2 +1,11 @@
-# BIOSLIB
-Retro programming library to make life easier using the PC/XT/AT and clones BIOS.
+```
+██████╗ ██╗ ██████╗ ███████╗██╗     ██╗██████╗ 
+██╔══██╗██║██╔═══██╗██╔════╝██║     ██║██╔══██╗
+██████╔╝██║██║   ██║███████╗██║     ██║██████╔╝
+██╔══██╗██║██║   ██║╚════██║██║     ██║██╔══██╗
+██████╔╝██║╚██████╔╝███████║███████╗██║██████╔╝
+╚═════╝ ╚═╝ ╚═════╝ ╚══════╝╚══════╝╚═╝╚═════╝ 
+                                               
+                                                                                                 
+```
+Retro programming library to make life easier using the BIOS functions of PC, XT, AT, et al. (and their clones).
