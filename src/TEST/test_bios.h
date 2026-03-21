@@ -12,7 +12,7 @@
 void test_bios_memory(void) {
     printf("Testing BIOS memory functions...\n");
     unsigned short base_memory;
-    unsigned long total_bytes;
+    //unsigned long total_bytes;
 
     // Get base memory size
     base_memory = bios_get_startup_memory_kb();
