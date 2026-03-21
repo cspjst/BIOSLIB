@@ -6,7 +6,7 @@
 ██████╔╝██║╚██████╔╝███████║███████╗██║██████╔╝
 ╚═════╝ ╚═╝ ╚═════╝ ╚══════╝╚══════╝╚═╝╚═════╝ 
                                                
-© Jeremy Simon Thornton 2025                                                                                                 
+© Jeremy Simon Thornton 2024                                                                                                 
 ```
 ## Retro programming library to make life easier using the BIOS functions of PC, XT, AT, et al. (and their clones).
 
