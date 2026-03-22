@@ -12,6 +12,13 @@ A retro programming library to make life easier using the BIOS functions of PC, 
 
 Inspired by David Jurgens' [HelpPC Reference Library](https://noami.us/helppc/index.html) and my desire to practice 8086 assembly language like it was 1986 :)
 
+> [!TIP] Adding the Library
+> 
+> In your main project repository (the one using BIOSLIB):
+> ```bash
+> git submodule add https://github.com/cspjst/BIOSLIB.git bioslib
+> ```
+
 ## Progress...
 
 *N.B.* Implemented on an ad hoc basis as the need(s) arise:
