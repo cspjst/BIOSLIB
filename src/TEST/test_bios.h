@@ -1,9 +1,6 @@
 #ifndef TEST_BIOS_H
 #define TEST_BIOS_H
 
-#include <stdio.h>
-#include <assert.h>
-
 #ifdef USE_DOSLIBC
     #include "../../dosstd/dos_stdio.h"
     #include "../../dosstd/dos_assert.h"
