@@ -4,10 +4,6 @@
 #include <stdio.h>
 #include <assert.h>
 
-
-
-
-
 #include "../BIOS/bios_memory_services.h"
 #include "../BIOS/bios_keyboard_services.h"
 #include "../BIOS/bios_keyboard_scan_codes.h"
