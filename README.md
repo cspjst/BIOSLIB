@@ -13,7 +13,7 @@ A retro programming library to make life easier using the BIOS functions of PC, 
 Inspired by David Jurgens' [HelpPC Reference Library](https://noami.us/helppc/index.html) and my desire to practice 8086 assembly language like it was 1986 :)
 
 > [!TIP]
-> Adding the Library
+> *Adding the Library*
 > 
 > In your main project repository (the one using BIOSLIB):
 > ```bash
