@@ -166,6 +166,7 @@ void test_bios_set_video_mode() {
     original_mode = state.mode;
     printf("  Original mode: 0x%02X %s\n", original_mode, bios_video_mode_names[original_mode]);
     assert(original_mode != MDA_TEXT_MONOCHROME_80X25); // unable set video mode using BIOS
+    assert(original_mode != CGA_TEXT_16_COLOUR_40X25); // already target mode
     bios_set_video_mode(CGA_TEXT_16_COLOUR_80x25);
     bios_get_video_state(&state);
     assert(state.mode == CGA_TEXT_16_COLOUR_80x25);
