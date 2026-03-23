@@ -1,14 +1,14 @@
 /**
- * @file bios_memory_services.h
- * @brief BIOS memory detection functions for DOS systems
- *
+ * @author      Jeremy Simon Thornton
+ * @copyright   2024 Jeremy Simon Thornton
+ * @version     0.1.0
  * @url https://www.stanislavs.org/helppc/int_12.html
  *
  * @details Provides interfaces to query system memory configuration using
  * various BIOS interrupts. Functions automatically adapt to the available
  * BIOS features on the target system.
  *
- * ## BIOS Memory Functions Timeline
+ * BIOS Memory Functions Timeline
  *
  * | Function | First Appeared | Systems | Notes |
  * |----------|---------------|---------|-------|

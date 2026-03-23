@@ -1,3 +1,8 @@
+/**
+* @author      Jeremy Simon Thornton
+* @copyright   2024 Jeremy Simon Thornton
+* @version     0.1.0
+*/
 #include "bios_keyboard_services.h"
 #include "bios_keyboard_constants.h"
 #include "bios_keyboard_types.h"

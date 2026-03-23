@@ -1,3 +1,8 @@
+/**
+* @author      Jeremy Simon Thornton
+* @copyright   2024 Jeremy Simon Thornton
+* @version     0.1.0
+*/
 #include "bios_memory_services.h"
 
 unsigned short bios_get_startup_memory_kb() {

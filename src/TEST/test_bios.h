@@ -8,6 +8,9 @@
 #include "../BIOS/bios_keyboard_services.h"
 #include "../BIOS/bios_keyboard_scan_codes.h"
 #include "../BIOS/bios_keyboard_constants.h"
+#include "../BIOS/bios_video_services.h"
+#include "../BIOS/bios_video_services_types.h"
+#include "../BIOS/bios_video_services_constants.h"
 
 void test_bios_memory(void) {
     printf("Testing BIOS memory functions...\n");
@@ -154,9 +157,29 @@ void test_bios_keys() {
     printf("BIOS key functions tests passed\n\n");
 }
 
+void test_bios_set_video_mode() {
+    printf("Testing bios_set_video_mode...\n");
+
+    bios_video_state_t state;
+    unsigned char original_mode;
+    bios_get_video_state(&state);
+    original_mode = state.mode;
+    printf("  Original mode: 0x%02X %s\n", original_mode, bios_video_mode_names[original_mode]);
+    assert(original_mode != MDA_TEXT_MONOCHROME_80X25); // unable set video mode using BIOS
+    bios_set_video_mode(CGA_TEXT_16_COLOUR_80x25);
+    bios_get_video_state(&state);
+    assert(state.mode == CGA_TEXT_16_COLOUR_80x25);
+    bios_set_video_mode(original_mode);
+    bios_get_video_state(&state);
+    assert(state.mode == original_mode);
+
+    printf("bios_set_video_mode tests passed\n\n");
+}
+
 void test_bios() {
     test_bios_memory();
     test_bios_keys();
+    test_bios_set_video_mode();
 }
 
 #endif
