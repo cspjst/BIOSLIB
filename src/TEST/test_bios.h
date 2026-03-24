@@ -11,6 +11,8 @@
 #include "../BIOS/bios_video_services.h"
 #include "../BIOS/bios_video_services_types.h"
 #include "../BIOS/bios_video_services_constants.h"
+#include "../BIOS/bios_time_services.h"
+#include "../BIOS/bios_time_constants.h"
 
 void test_bios_memory(void) {
     printf("Testing BIOS memory functions...\n");
@@ -181,7 +183,68 @@ void test_bios_video() {
     printf("bios video tests passed\n\n");
 }
 
+void test_bios_read_system_clock(void) {
+    printf("Testing bios time services...\n");
+
+    bios_ticks_since_midnight_t ticks;
+    float total_seconds;
+    float hours, minutes, seconds;
+
+    /* Read current ticks */
+    bios_read_system_clock(&ticks);
+
+    /* Calculate time using floats */
+    total_seconds = (float)ticks / TICKS_PER_SECOND;
+    hours   = total_seconds / 3600.0;
+    minutes = (total_seconds / 60.0) - (hours * 60.0);
+    seconds = total_seconds - (hours * 3600.0) - (minutes * 60.0);
+
+    printf("  Ticks since midnight: %lu\n", (unsigned long)ticks);
+    printf("  Approximate time: %02.0f:%02.0f:%02.0f\n", hours, minutes, seconds);
+
+    /* Sanity checks */
+    printf("  Sanity check: ");
+    assert((unsigned long)ticks < 0x1800B0);
+    printf("PASS\n");
+}
+
+void test_bios_set_system_clock(void) {
+
+    bios_ticks_since_midnight_t original_ticks;
+    bios_ticks_since_midnight_t verify_ticks;
+    unsigned char error;
+
+    /* Save current time */
+    bios_read_system_clock(&original_ticks);
+    printf("  Original ticks: %lu\n", (unsigned long)original_ticks);
+
+    /* Set to 0 (midnight) */
+    printf("  Setting ticks to 0... ");
+    error = bios_set_system_clock(0);
+
+    if(error == 0) {
+        printf("PASS\n");
+    } else {
+        printf("FAIL (error=0x%02X)\n", error);
+    }
+
+    /* Verify reset */
+    bios_read_system_clock(&verify_ticks);
+    printf("  Verified ticks: %lu\n", (unsigned long)verify_ticks);
+
+    /* Restore original time */
+    printf("  Restoring original time... ");
+    error = bios_set_system_clock(original_ticks);
+    if(error == 0) {
+        printf("PASS\n");
+    } else {
+        printf("FAIL (error=0x%02X)\n", error);
+    }
+}
+
 void test_bios() {
+    test_bios_read_system_clock();
+    test_bios_set_system_clock();
     test_bios_memory();
     test_bios_keys();
     test_bios_video();
