@@ -1,3 +1,8 @@
+/**
+ * @author      Jeremy Simon Thornton
+ * @copyright   2024 Jeremy Simon Thornton
+ * @version     0.1.0
+ */
 #include "bios_video_services_constants.h"
 
 const char bios_video_mode_names[20][64] = {

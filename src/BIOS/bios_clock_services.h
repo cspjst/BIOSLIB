@@ -1,11 +1,14 @@
 /**
- *  @brief    INT 1Ah: Timer I/O (and MRCI POST Hook)
- *  @url http://www.techhelpmanual.com/27-dos__bios___extensions_service_index.html
+ * @author      Jeremy Simon Thornton
+ * @copyright   2024 Jeremy Simon Thornton
+ * @version     0.1.0
+ * @brief    INT 1Ah: Timer I/O (and MRCI POST Hook)
+ * @url http://www.techhelpmanual.com/27-dos__bios___extensions_service_index.html
  */
-#ifndef BIOS_TIMER_IO_SERVICES_H
-#define	BIOS_TIMER_IO_SERVICES_H
+#ifndef BIOS_CLOCK_SERVICES_H
+#define	BIOS_CLOCK_SERVICES_H
 
-#include "bios_time_types.h"
+#include "bios_clock_types.h"
 
 // INT 1a,00 - Read System Clock (Ticks) [PC] [XT] [AT]
 void bios_read_system_clock(bios_ticks_since_midnight_t* ticks);

@@ -9,8 +9,8 @@
  * counts per hour   ? 65543
  * counts per day    ? 1573040
  */
-#ifndef BIOS_TIME_CONSTANTS_H
-#define BIOS_TIME_CONSTANTS_H
+#ifndef BIOS_CLOCK_CONSTANTS_H
+#define BIOS_CLOCK_CONSTANTS_H
 
 #define BIOS_CLOCK_SERVICES			1Ah
 #define BIOS_READ_SYSTEM_CLOCK_COUNTER	0

@@ -2,14 +2,14 @@
  * @author      Jeremy Simon Thornton
  * @copyright   2024 Jeremy Simon Thornton
  * @version     0.1.0
- *  8254 channel 0 runs at 1.19318 mhz or ~ 838.0965 nsecs / cycle
- *  System timer interrupts every 65536 cycles ~= 54.9255 ms or ~ 18.20648 ticks per second
- *  1 ms   = 1193.18 cycles
- *  1 hour ~= 65543 ticks ~= 3599.9816 secs
- *  24 hour ~= 1573040 (hex 1800B0) ticks ~= 86399.998 secs
+ * 8254 channel 0 runs at 1.19318 mhz or ~ 838.0965 nsecs / cycle
+ * System timer interrupts every 65536 cycles ~= 54.9255 ms or ~ 18.20648 ticks per second
+ * + 1 ms   = 1193.18 cycles
+ * + 1 hour ~= 65543 ticks ~= 3599.9816 secs
+ * + 24 hour ~= 1573040 (hex 1800B0) ticks ~= 86399.998 secs
  */
-#include "bios_time_services.h"
-#include "bios_time_constants.h"
+#include "bios_clock_services.h"
+#include "bios_clock_constants.h"
 
 /**
 * @brief  INT 1A,0 - Read System Clock Counter - it is incremented about once every 55 ms by INT 08H.

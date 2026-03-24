@@ -11,8 +11,8 @@
 #include "../BIOS/bios_video_services.h"
 #include "../BIOS/bios_video_services_types.h"
 #include "../BIOS/bios_video_services_constants.h"
-#include "../BIOS/bios_time_services.h"
-#include "../BIOS/bios_time_constants.h"
+#include "../BIOS/bios_clock_services.h"
+#include "../BIOS/bios_clock_constants.h"
 
 void test_bios_memory(void) {
     printf("Testing BIOS memory functions...\n");

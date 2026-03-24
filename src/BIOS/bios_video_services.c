@@ -2,7 +2,7 @@
  * @author      Jeremy Simon Thornton
  * @copyright   2024 Jeremy Simon Thornton
  * @version     0.1.0
- *  @url http://www.techhelpmanual.com/27-dos__bios___extensions_service_index.html
+ * @url http://www.techhelpmanual.com/27-dos__bios___extensions_service_index.html
  */
 #include "bios_video_services_constants.h"
 #include "bios_video_services.h"

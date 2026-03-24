@@ -2,8 +2,8 @@
  * @author      Jeremy Simon Thornton
  * @copyright   2024 Jeremy Simon Thornton
  * @version     0.1.0
- *  @brief     INT 10 - Video BIOS Services
- *  @note	   Warning: Some BIOS implementations have a bug that causes register
+ * @brief      INT 10 - Video BIOS Services
+ * @note	   Warning: Some BIOS implementations have a bug that causes register
  *			   BP to be destroyed.   It is advisable to save BP before a call to
  *		       Video BIOS routines on these systems.
  */
