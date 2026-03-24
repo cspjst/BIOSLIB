@@ -71,4 +71,5 @@ unsigned char bios_set_system_clock(bios_ticks_since_midnight_t ticks) {
 		mov		error, 0FFh;
 OK:
 	}
+	return error;
 }
