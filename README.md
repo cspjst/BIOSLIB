@@ -20,23 +20,7 @@ Inspired by David Jurgens' [HelpPC Reference Library](https://noami.us/helppc/in
 > git submodule add https://github.com/cspjst/BIOSLIB.git bioslib
 > ```
 
-## Progress...
-
 *N.B.* Implemented on an ad hoc basis as the need(s) arise:
-
-- [ ] 0/1  INT 8 - System timer
-- [ ] 0/27 INT 10 - Video BIOS Services
-- [ ] 0/1  INT 11 - BIOS Equipment Determination / BIOS Equipment Flags
-- [x] 1/1  INT 12 - Memory Size Determination
-- [ ] 0/26 INT 13 - Diskette BIOS Services
-- [ ] 0/5  INT 14 - BIOS Asynchronous Communications Services
-- [ ] 0/30 INT 15 - System BIOS Services
-- [x] 2/9  INT 16 - Keyboard BIOS Services
-- [ ] 0/3  INT 17 - Printer BIOS Services
-- [ ] 0/1  INT 19 - Bootstrap Loader
-- [x] 2/13 INT 1A - System and Real Time Clock BIOS Services
-- [ ] 0/1  INT 1B - BIOS Ctrl-Break Handler Address
-- [ ] 0/1  INT 1C - System Timer Tick (User Routine)
 
 ## Interrupt Table as Implemented by System BIOS
 
