@@ -6,8 +6,6 @@
 #ifndef	BIOS_VIDEO_SERVICES_TYPES
 #define BIOS_VIDEO_SERVICES_TYPES
 
-typedef unsigned char bios_video_mode_t;
-
 typedef struct {
 	unsigned char		columns;
 	unsigned char		mode;
