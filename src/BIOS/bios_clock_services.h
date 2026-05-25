@@ -1,7 +1,7 @@
 /**
  * @author      Jeremy Simon Thornton
  * @copyright   2024 Jeremy Simon Thornton
- * @version     0.1.0
+ *
  * @brief    INT 1Ah: Timer I/O (and MRCI POST Hook)
  * @url http://www.techhelpmanual.com/27-dos__bios___extensions_service_index.html
  */

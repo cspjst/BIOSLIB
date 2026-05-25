@@ -1,7 +1,7 @@
 /**
  * @author      Jeremy Simon Thornton
  * @copyright   2024 Jeremy Simon Thornton
- * @version     0.1.0
+ *
  *
  * The IBM PC timer (8253/8254 PIT) runs at 1.193180 MHz.
  * Channel 0 divides this by 65536 to generate IRQ 0 (INT 08h):

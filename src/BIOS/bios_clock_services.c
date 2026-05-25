@@ -1,7 +1,7 @@
 /**
  * @author      Jeremy Simon Thornton
  * @copyright   2024 Jeremy Simon Thornton
- * @version     0.1.0
+ *
  * 8254 channel 0 runs at 1.19318 mhz or ~ 838.0965 nsecs / cycle
  * System timer interrupts every 65536 cycles ~= 54.9255 ms or ~ 18.20648 ticks per second
  * + 1 ms   = 1193.18 cycles

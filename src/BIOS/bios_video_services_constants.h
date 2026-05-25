@@ -1,7 +1,7 @@
 /**
 * @author      Jeremy Simon Thornton
 * @copyright   2024 Jeremy Simon Thornton
-* @version     0.1.0
+*
 */
 #ifndef	BIOS_VIDEO_SERVICES_CONSTANTS_H
 #define BIOS_VIDEO_SERVICES_CONSTANTS_H
