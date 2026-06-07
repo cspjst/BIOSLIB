@@ -194,7 +194,7 @@ void test_bios_read_system_clock(void) {
     bios_read_system_clock(&ticks);
 
     /* Calculate time using floats */
-    total_seconds = (float)ticks / TICKS_PER_SECOND;
+    total_seconds = (float)ticks / BIOS_TICKS_PER_SECOND;
     hours   = total_seconds / 3600.0;
     minutes = (total_seconds / 60.0) - (hours * 60.0);
     seconds = total_seconds - (hours * 3600.0) - (minutes * 60.0);
