@@ -12,15 +12,14 @@
 * BIOS VIDEO SERVICES AH FOR INT 10 - Video BIOS Services
 */
 
-#define BIOS_SET_VIDEO_MODE                      0
-
+#define BIOS_SET_VIDEO_MODE                     0
 //SET_CURSOR_TYPE
 //SET_CURSOR_POSITION
 //READ_CURSOR_POSITION
 //READ_LIGHT_PEN
 //SELECT_ACTIVE_DISPLAY_PAGE
-//SCROLL_ACTIVE_PAGE_UP
-//SCROLL_ACTIVE_PAGE_DOWN
+#define BIOS_SCROLL_ACTIVE_PAGE_UP              06h
+#define BIOS_SCROLL_ACTIVE_PAGE_DOWN            07h
 //READ_CHARACTER_AND_ATTRIBUTE_AT_CURSOR
 //WRITE_CHARACTER_AND_ATTRIBUTE_AT_CURSOR
 //WRITE_CHARACTER_AT_CURRENT_CURSOR
@@ -28,14 +27,10 @@
 //WRITE_GRAPHICS_PIXEL_AT_COORDINATE
 //READ_GRAPHICS_PIXEL_AT_COORDINATE
 //WRITE_TEXT_IN_TELETYPE_MODE
-
-#define BIOS_GET_CURRENT_VIDEO_STATE             0Fh
-
+#define BIOS_GET_CURRENT_VIDEO_STATE            0Fh
 //SET/GET_PALETTE_REGISTERS					// (EGA/VGA)
 //CHARACTER_GENERATOR_ROUTINE				// (EGA/VGA)
-
-#define BIOS_VIDEO_SUBSYSTEM_CONFIGURATION		12h	    // (EGA/VGA)
-
+#define BIOS_VIDEO_SUBSYSTEM_CONFIGURATION	    12h	    // (EGA/VGA)
 //WRITE_STRING								// (BIOS_AFTER_1/10/86)
 //LOAD_LCD_CHAR_FONT						// (CONVERTIBLE)
 //RETURN_PHYSICAL_DISPLAY_PARMS				// (CONVERTIBLE)
@@ -46,6 +41,36 @@
 //GET_DESQVIEW_VIRTUAL_SCREEN_REGEN_BUFFER
 //UPDATE_DESQVIEW_VIRTUAL_SCREEN_REGEN_BUFFER
 
+typedef enum {
+    // foreground colours
+    BIOS_FG_BLACK           = 0x00,
+    BIOS_FG_BLUE            = 0x01,
+    BIOS_FG_GREEN           = 0x02,
+    BIOS_FG_CYAN            = 0x03,
+    BIOS_FG_RED             = 0x04,
+    BIOS_FG_MAGENTA         = 0x05,
+    BIOS_FG_BROWN           = 0x06,
+    BIOS_FG_LIGHT_GREY      = 0x07,
+    BIOS_FG_DARK_GREY       = 0x08,
+    BIOS_FG_LIGHT_BLUE      = 0x09,
+    BIOS_FG_LIGHT_GREEN     = 0x0A,
+    BIOS_FG_LIGHT_CYAN      = 0x0B,
+    BIOS_FG_LIGHT_RED       = 0x0C,
+    BIOS_FG_LIGHT_MAGENTA   = 0x0D,
+    BIOS_FG_YELLOW          = 0x0E,
+    BIOS_FG_WHITE           = 0x0F,
+    // background colours (pre-shifted)
+    BIOS_BG_BLACK           = 0x00,
+    BIOS_BG_BLUE            = 0x10,
+    BIOS_BG_GREEN           = 0x20,
+    BIOS_BG_CYAN            = 0x30,
+    BIOS_BG_RED             = 0x40,
+    BIOS_BG_MAGENTA         = 0x50,
+    BIOS_BG_BROWN           = 0x60,
+    BIOS_BG_LIGHT_GREY      = 0x70,
+    // blink
+    BIOS_BLINK              = 0x80
+} bios_attr_t;
 
 /**
 * BIOS Video Subsytem Configuration Sub-systems:

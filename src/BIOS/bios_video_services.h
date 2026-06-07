@@ -12,17 +12,22 @@
 
 #include "bios_video_services_constants.h"
 #include "bios_video_services_types.h"
+#include "bios_types.h"
 
 // INT 10,0 - Set video mode
-void bios_set_video_mode(unsigned char mode);
+void bios_set_video_mode(bios_byte_t mode);
 
 // INT 10,1 - Set cursor type
 // INT 10,2 - Set cursor position
 // INT 10,3 - Read cursor position
 // INT 10,4 - Read light pen
 // INT 10,5 - Select active display page
+//
 // INT 10,6 - Scroll active page up
+void bios_scroll_active_page_up(bios_byte_t nlines, bios_byte_t attrib, bios_byte_t x1, bios_byte_t y1, bios_byte_t x2, bios_byte_t y2);
 // INT 10,7 - Scroll active page down
+void bios_scroll_active_page_down(bios_byte_t nlines, bios_byte_t attrib, bios_byte_t x1, bios_byte_t y1, bios_byte_t x2, bios_byte_t y2);
+
 // INT 10,8 - Read character and attribute at cursor
 // INT 10,9 - Write character and attribute at cursor
 // INT 10,A - Write character at current cursor
@@ -38,19 +43,19 @@ void bios_get_video_state(bios_video_state_t* state);
 // INT 10,11 - Character generator routine (EGA/VGA)
 
 // INT 10,12 - Video subsystem configuration (EGA/VGA)
-unsigned char bios_video_subsystem_configuration(unsigned char request, unsigned char setting, bios_video_subsystem_config_t* config);
+bios_byte_t bios_video_subsystem_configuration(bios_byte_t request, bios_byte_t setting, bios_video_subsystem_config_t* config);
 
 	//INT 10,12 - broken down into its sub-functions
-	unsigned char bios_return_video_configuration_information(bios_video_subsystem_config_t* config);
+	bios_byte_t bios_return_video_configuration_information(bios_video_subsystem_config_t* config);
 	//bios_select_alternate_print_screen_routine
 	//bios_select_scan_lines_for_alphanumeric_modes
 	//bios_select_default_palette_loading
-	//unsigned char bios_cpu_access_to_video_ram(unsigned char enable);
+	//bios_byte_t bios_cpu_access_to_video_ram(bios_byte_t enable);
 	//bios_gray_scale_summing
 	//bios_cursor_emulation
 	//bios_ps2_video_display_switching
 	//bios_video_refresh_control
-	unsigned char bios_helper_video_subsytem_configuration(unsigned char request, unsigned char setting);
+	bios_byte_t bios_helper_video_subsytem_configuration(bios_byte_t request, bios_byte_t setting);
 
 // INT 10,13 - Write string (BIOS after 1/10/86)
 // INT 10,14 - Load LCD char font (convertible)

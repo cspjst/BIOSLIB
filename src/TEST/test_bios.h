@@ -242,11 +242,33 @@ void test_bios_set_system_clock(void) {
     }
 }
 
+void test_bios_scroll(void) {
+    printf("Testing BIOS scroll functions...\n");
+    printf("Press UP/DOWN arrow to scroll, ESC to quit\n");
+
+    bios_key_t key;
+
+    do {
+        bios_wait_for_keystroke_and_read(&key);
+        switch(key.parts.scan) {
+            case SCAN_UP:
+                bios_scroll_active_page_up(1, BIOS_FG_LIGHT_GREY | BIOS_BG_RED, 20, 4, 60, 20);
+                break;
+            case SCAN_DOWN:
+                bios_scroll_active_page_down(1, BIOS_FG_LIGHT_GREY | BIOS_BG_BLUE, 18, 3, 62, 21);
+                break;
+        }
+    } while(key.parts.scan != SCAN_ESC);
+
+    printf("BIOS scroll tests passed\n\n");
+}
+
 void test_bios() {
     test_bios_read_system_clock();
     test_bios_set_system_clock();
     test_bios_memory();
     test_bios_keys();
+    test_bios_scroll();
     test_bios_video();
 }
 

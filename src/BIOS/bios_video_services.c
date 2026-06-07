@@ -13,7 +13,7 @@
 * AL = video_mode_t
 * @see bios_video_services_constants.h enum type
 */
-void bios_set_video_mode(unsigned char mode) {
+void bios_set_video_mode(bios_byte_t mode) {
 	__asm {
 		.8086
 		pushf                                ; preserve what int BIOS functions may not
@@ -25,6 +25,58 @@ void bios_set_video_mode(unsigned char mode) {
 
 		pop 	ds
 		popf
+	}
+}
+
+/**
+ * INT 10,6 - Scroll Window Up
+ *  AH = 06
+ *	AL = number of lines to scroll, previous lines are
+ *	     blanked, if 0 or AL > screen size, window is blanked
+ *	BH = attribute to be used on blank line
+ *	CH = row of upper left corner of scroll window
+ *	CL = column of upper left corner of scroll window
+ *	DH = row of lower right corner of scroll window
+ *	DL = column of lower right corner of scroll window
+ *	returns nothing
+ */
+void bios_scroll_active_page_up(bios_byte_t nlines, bios_byte_t attr, bios_byte_t x1, bios_byte_t y1, bios_byte_t x2, bios_byte_t y2) {
+    __asm {
+  		.8086
+  		pushf                                ; preserve what int BIOS functions may not
+        push    ds                           ; due to unreliable behaviour
+
+  		mov		al, nlines
+        mov     bh, attr
+        mov     cl, x1
+        mov     ch, y1
+        mov     dl, x2
+        mov     dh, y2
+  		mov		ah, BIOS_SCROLL_ACTIVE_PAGE_UP
+  		int		BIOS_VIDEO_SERVICES
+
+  		pop 	ds
+  		popf
+	}
+}
+
+void bios_scroll_active_page_down(bios_byte_t nlines, bios_byte_t attr, bios_byte_t x1, bios_byte_t y1, bios_byte_t x2, bios_byte_t y2) {
+    __asm {
+        .8086
+        pushf                                ; preserve what int BIOS functions may not
+        push    ds                           ; due to unreliable behaviour
+
+        mov		al, nlines
+        mov     bh, attr
+        mov     cl, x1
+        mov     ch, y1
+        mov     dl, x2
+        mov     dh, y2
+        mov		ah, BIOS_SCROLL_ACTIVE_PAGE_DOWN
+        int		BIOS_VIDEO_SERVICES
+
+        pop 	ds
+        popf
 	}
 }
 
@@ -90,8 +142,8 @@ void bios_get_video_state(bios_video_state_t* state) {
 *
 *  @note If upon return from this call, BL>4, then must be running on a CGA or MDA (not an EGA or VGA).
 */
-unsigned char bios_return_video_configuration_information(bios_video_subsystem_config_t* config) {
-	unsigned char e = 0;
+bios_byte_t bios_return_video_configuration_information(bios_video_subsystem_config_t* config) {
+	bios_byte_t e = 0;
 	__asm {
 		.8086
 		pushf
@@ -204,8 +256,8 @@ unsigned char bios_return_video_configuration_information(bios_video_subsystem_c
 * @note Be sure to re-enable refresh when finished updating video memory.
 * -----------------------------------------------------------------------------------------------------
 */
-unsigned char bios_helper_video_subsytem_configuration(unsigned char request, unsigned char setting) {
-	unsigned char e = 0;
+bios_byte_t bios_helper_video_subsytem_configuration(bios_byte_t request, bios_byte_t setting) {
+	bios_byte_t e = 0;
 	__asm {
 		.8086
 		pushf
@@ -226,7 +278,7 @@ unsigned char bios_helper_video_subsytem_configuration(unsigned char request, un
 /**
 * @brief INT 10,12 - Video Subsystem Configuration (EGA/VGA)
 */
-unsigned char bios_video_subsystem_configuration(unsigned char request, unsigned char setting, bios_video_subsystem_config_t* config) {
+bios_byte_t bios_video_subsystem_configuration(bios_byte_t request, bios_byte_t setting, bios_video_subsystem_config_t* config) {
 	switch (request) {
 	case BIOS_RETURN_VIDEO_CONFIGURATION_INFORMATION:	// the odd one out of the sub-functions
 		return bios_return_video_configuration_information(config);
