@@ -14,7 +14,7 @@
 #include "../BIOS/bios_clock_services.h"
 #include "../BIOS/bios_clock_constants.h"
 
-void test_bios_memory(void) {
+void test_bios_memory() {
     printf("Testing BIOS memory functions...\n");
     unsigned short base_memory;
     //unsigned long total_bytes;
@@ -183,7 +183,7 @@ void test_bios_video() {
     printf("bios video tests passed\n\n");
 }
 
-void test_bios_read_system_clock(void) {
+void test_bios_read_system_clock() {
     printf("Testing bios time services...\n");
 
     bios_ticks_since_midnight_t ticks;
@@ -208,7 +208,7 @@ void test_bios_read_system_clock(void) {
     printf("PASS\n");
 }
 
-void test_bios_set_system_clock(void) {
+void test_bios_set_system_clock() {
 
     bios_ticks_since_midnight_t original_ticks;
     bios_ticks_since_midnight_t verify_ticks;
@@ -242,7 +242,7 @@ void test_bios_set_system_clock(void) {
     }
 }
 
-void test_bios_scroll(void) {
+void test_bios_scroll() {
     printf("Testing BIOS scroll functions...\n");
     printf("Press UP/DOWN arrow to scroll, ESC to quit\n");
 
@@ -263,6 +263,14 @@ void test_bios_scroll(void) {
     printf("BIOS scroll tests passed\n\n");
 }
 
+void test_bios_cls() {
+    printf("\nclear screen?\n");
+    if(getchar() != 'y') return;
+    bios_scroll_active_page_up(0, BIOS_FG_LIGHT_GREY | BIOS_BG_BLACK, 0, 0, 20, 10);
+    bios_set_cursor_position(0, 0);
+    printf("DONE\n");
+}
+
 void test_bios() {
     test_bios_read_system_clock();
     test_bios_set_system_clock();
@@ -270,6 +278,8 @@ void test_bios() {
     test_bios_keys();
     test_bios_scroll();
     test_bios_video();
+    test_bios_cls();
+
 }
 
 #endif

@@ -19,10 +19,11 @@ void bios_set_video_mode(bios_byte_t mode);
 
 // INT 10,1 - Set cursor type
 // INT 10,2 - Set cursor position
+void bios_set_cursor_position(bios_byte_t x, bios_byte_t y);
 // INT 10,3 - Read cursor position
 // INT 10,4 - Read light pen
 // INT 10,5 - Select active display page
-//
+
 // INT 10,6 - Scroll active page up
 void bios_scroll_active_page_up(bios_byte_t nlines, bios_byte_t attrib, bios_byte_t x1, bios_byte_t y1, bios_byte_t x2, bios_byte_t y2);
 // INT 10,7 - Scroll active page down

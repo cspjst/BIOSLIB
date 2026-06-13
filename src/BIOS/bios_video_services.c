@@ -29,6 +29,33 @@ void bios_set_video_mode(bios_byte_t mode) {
 }
 
 /**
+ * INT 10,2 - Set Cursor Position
+ * AH = 02
+ * BH = page number (0 for graphics modes)
+ * DH = row
+ * DL = column
+ * returns nothing
+ * - positions relative to 0,0 origin
+ * - 80x25 uses coordinates 0,0 to 24,79;	40x25 uses 0,0 to 24,39
+ */
+void bios_set_cursor_position(bios_byte_t x, bios_byte_t y) {
+    __asm {
+  		.8086
+  		pushf                                ; preserve what int BIOS functions may not
+        push    ds                           ; due to unreliable behaviour
+
+        mov     bh, 0
+  		mov     dl, x
+        mov     dh, y
+  		mov		ah, BIOS_SET_CURSOR_POSITION
+  		int		BIOS_VIDEO_SERVICES
+
+  		pop 	ds
+  		popf
+    }
+}
+
+/**
  * INT 10,6 - Scroll Window Up
  *  AH = 06
  *	AL = number of lines to scroll, previous lines are
