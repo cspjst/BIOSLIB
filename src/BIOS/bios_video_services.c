@@ -13,18 +13,15 @@
 * AL = video_mode_t
 * @see bios_video_services_constants.h enum type
 */
-void bios_set_video_mode(bios_byte_t mode) {
+void  bios_set_video_mode(bios_byte_t mode) {
 	__asm {
 		.8086
-		pushf                                ; preserve what int BIOS functions may not
-        push    ds                           ; due to unreliable behaviour
+		push    ds
 
-		mov		al, mode
 		mov		ah, BIOS_SET_VIDEO_MODE
 		int		BIOS_VIDEO_SERVICES
 
 		pop 	ds
-		popf
 	}
 }
 
@@ -38,11 +35,10 @@ void bios_set_video_mode(bios_byte_t mode) {
  * - positions relative to 0,0 origin
  * - 80x25 uses coordinates 0,0 to 24,79;	40x25 uses 0,0 to 24,39
  */
-void bios_set_cursor_position(bios_byte_t x, bios_byte_t y) {
+void  bios_set_cursor_position(bios_byte_t x, bios_byte_t y) {
     __asm {
   		.8086
-  		pushf                                ; preserve what int BIOS functions may not
-        push    ds                           ; due to unreliable behaviour
+  		push    ds
 
         mov     bh, 0
   		mov     dl, x
@@ -51,7 +47,6 @@ void bios_set_cursor_position(bios_byte_t x, bios_byte_t y) {
   		int		BIOS_VIDEO_SERVICES
 
   		pop 	ds
-  		popf
     }
 }
 
@@ -67,11 +62,10 @@ void bios_set_cursor_position(bios_byte_t x, bios_byte_t y) {
  *	DL = column of lower right corner of scroll window
  *	returns nothing
  */
-void bios_scroll_active_page_up(bios_byte_t nlines, bios_byte_t attr, bios_byte_t x1, bios_byte_t y1, bios_byte_t x2, bios_byte_t y2) {
+void  bios_scroll_active_page_up(bios_byte_t nlines, bios_byte_t attr, bios_byte_t x1, bios_byte_t y1, bios_byte_t x2, bios_byte_t y2) {
     __asm {
   		.8086
-  		pushf                                ; preserve what int BIOS functions may not
-        push    ds                           ; due to unreliable behaviour
+  		push    ds
 
   		mov		al, nlines
         mov     bh, attr
@@ -82,16 +76,14 @@ void bios_scroll_active_page_up(bios_byte_t nlines, bios_byte_t attr, bios_byte_
   		mov		ah, BIOS_SCROLL_ACTIVE_PAGE_UP
   		int		BIOS_VIDEO_SERVICES
 
-  		pop 	ds
-  		popf
+  		pop     ds
 	}
 }
 
-void bios_scroll_active_page_down(bios_byte_t nlines, bios_byte_t attr, bios_byte_t x1, bios_byte_t y1, bios_byte_t x2, bios_byte_t y2) {
+void  bios_scroll_active_page_down(bios_byte_t nlines, bios_byte_t attr, bios_byte_t x1, bios_byte_t y1, bios_byte_t x2, bios_byte_t y2) {
     __asm {
         .8086
-        pushf                                ; preserve what int BIOS functions may not
-        push    ds                           ; due to unreliable behaviour
+        push    ds
 
         mov		al, nlines
         mov     bh, attr
@@ -103,7 +95,6 @@ void bios_scroll_active_page_down(bios_byte_t nlines, bios_byte_t attr, bios_byt
         int		BIOS_VIDEO_SERVICES
 
         pop 	ds
-        popf
 	}
 }
 
@@ -127,7 +118,8 @@ void bios_scroll_active_page_down(bios_byte_t nlines, bios_byte_t attr, bios_byt
 void bios_get_video_state(bios_video_state_t* state) {
 	__asm {
 		.8086
-		pushf
+		push    di
+		push    es
 		push 	ds
 
 		mov	ah, BIOS_GET_CURRENT_VIDEO_STATE
@@ -138,7 +130,8 @@ void bios_get_video_state(bios_video_state_t* state) {
 		mov	es:[di + 2], bh			; display page
 
 		pop 	ds
-		popf
+		pop     es
+		pop     di
 	}
 }
 
@@ -170,16 +163,15 @@ void bios_get_video_state(bios_video_state_t* state) {
 *  @note If upon return from this call, BL>4, then must be running on a CGA or MDA (not an EGA or VGA).
 */
 bios_byte_t bios_return_video_configuration_information(bios_video_subsystem_config_t* config) {
-	bios_byte_t e = 0;
 	__asm {
 		.8086
-		pushf
+		push    di
+		push    es
 		push 	ds
 
 		mov		ah, BIOS_VIDEO_SUBSYSTEM_CONFIGURATION
 		mov		bl, 10h						; return video configuration information
 		int		BIOS_VIDEO_SERVICES
-		mov		e, al
 		les		di, config
 		mov		es:[di], bh					; color_mode(0 = colour, 1 = mono)
 		mov		es:[di + 1], bl				; EGA memory BL(0 = 64k, 2 = 128k, 2 = 192k, 3 = 256k)
@@ -187,9 +179,9 @@ bios_byte_t bios_return_video_configuration_information(bios_video_subsystem_con
 		mov		es:[di + 3], cl				; switch_settings
 
 		pop 	ds
-		popf
+		pop     es
+		pop     di
 	}
-	return e;
 }
 
 /**
@@ -284,22 +276,17 @@ bios_byte_t bios_return_video_configuration_information(bios_video_subsystem_con
 * -----------------------------------------------------------------------------------------------------
 */
 bios_byte_t bios_helper_video_subsytem_configuration(bios_byte_t request, bios_byte_t setting) {
-	bios_byte_t e = 0;
 	__asm {
 		.8086
-		pushf
 		push 	ds
 
 		mov		ah, BIOS_VIDEO_SUBSYSTEM_CONFIGURATION
 		mov		bl, request
 		mov		al, setting
 		int		BIOS_VIDEO_SERVICES
-		mov		e, al
 
 		pop 	ds
-		popf
 	}
-	return e;
 }
 
 /**

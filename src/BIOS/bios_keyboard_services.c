@@ -14,19 +14,21 @@
  *	AH = keyboard scan code
  *	AL = ASCII character or zero if special function key
  */
-void bios_wait_for_keystroke_and_read(bios_key_t* key) {
+void  bios_wait_for_keystroke_and_read(bios_key_t* key) {
     __asm {
 		.8086
-		pushf               ; not all BIOS functions are well behaved
+		push    di
+		push    es
         push    ds
 
-        les     di, key
 		mov		ah, BIOS_WAIT_FOR_KEYSTROKE_AND_READ
 		int		BIOS_KEYBOARD_SERVICES
+		les     di, key
 		stosw
 
 		pop 	ds
-		popf
+		pop     es
+		pop     di
 	}
 }
 
@@ -39,15 +41,16 @@ void bios_wait_for_keystroke_and_read(bios_key_t* key) {
  *	AH = scan code
  *	AL = ASCII character or zero if special function key
  */
-void bios_get_keystroke_status(bios_key_status_t* key_state) {
+void  bios_get_keystroke_status(bios_key_status_t* key_state) {
     __asm {
 		.8086
-		pushf
+		push    di
+		push    es
         push    ds
 
-        les     di, key_state
 		mov		ah, BIOS_GET_KEYSTROKE_STATUS
 		int		BIOS_KEYBOARD_SERVICES
+		les     di, key_state
         stosw
         jz      ZERO
         mov     al, 1
@@ -56,7 +59,8 @@ ZERO:   xor     al, al
 STORE:  stosb
 
 		pop 	ds
-		popf
+		pop     es
+		pop     si
 	}
 }
 
@@ -75,18 +79,20 @@ STORE:  stosb
  * 		 | `---------- caps-lock is active
  * 		 `----------- insert is active
  */
-void bios_get_keyboard_flags(bios_keybd_info_t* flags) {
+void  bios_get_keyboard_flags(bios_keybd_info_t* flags) {
     __asm {
 		.8086
-		pushf
+		push    di
+		push    es
         push    ds
 
-        les     di, flags
 		mov		ah, BIOS_GET_SHIFT_STATUS
 		int		BIOS_KEYBOARD_SERVICES
-		mov     es:[di], al
+		les     di, flags
+		stosb
 
 		pop 	ds
-		popf
+		pop     es
+		pop     di
 	}
 }

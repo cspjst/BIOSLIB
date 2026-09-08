@@ -10,6 +10,7 @@
  */
 #include "bios_clock_services.h"
 #include "bios_clock_constants.h"
+#include "bios_clock_types.h"
 
 /**
 * @brief  INT 1A,0 - Read System Clock Counter - it is incremented about once every 55 ms by INT 08H.
@@ -34,9 +35,10 @@
 * incremented approximately 18.206 times per second
 * at midnight CX:DX is zero
 */
-void bios_read_system_clock(bios_ticks_since_midnight_t* ticks) {
+void  bios_read_system_clock(bios_ticks_since_midnight_t* ticks) {
 	__asm{
 		.8086
+		push    ds
 
 		mov		ah, BIOS_READ_SYSTEM_CLOCK_COUNTER
 		int		BIOS_CLOCK_SERVICES
@@ -44,6 +46,7 @@ void bios_read_system_clock(bios_ticks_since_midnight_t* ticks) {
 		mov		[bx], dx							; Intel is little endian
 		mov		[bx + 2],cx
 
+		pop     ds
 	}
 }
 
@@ -59,17 +62,18 @@ void bios_read_system_clock(bios_ticks_since_midnight_t* ticks) {
 * CF    (0) if no error		(1) on invalid setting
 */
 unsigned char bios_set_system_clock(bios_ticks_since_midnight_t ticks) {
-	unsigned char error = 0;
-	__asm {
+    __asm {
 		.8086
+		push    ds
 
-		les		dx, ticks
-		mov		cx, es
+		mov		cx, dx                              ; watcall DX:AX = ticks
+		mov     dx, ax
+		xor     ax, ax                              ; AX = error 0 success
 		mov     ah, BIOS_SET_SYSTEM_CLOCK_COUNTER
 		int     BIOS_CLOCK_SERVICES
 		jnc		OK
-		mov		error, 0FFh;
-OK:
+		mov		ax, 0FFh;                           ; flag an error
+
+OK:     pop     ds
 	}
-	return error;
 }
