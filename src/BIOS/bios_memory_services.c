@@ -8,10 +8,6 @@
 unsigned short bios_get_startup_memory_kb() {
     __asm {
         .8086
-		push    ds
-
         int     BIOS_MEMORY_SERVICES    ; Returns KB of base memory in AX
-
-        pop 	ds
     }
 }

@@ -1,8 +1,14 @@
 /**
  * @author      Jeremy Simon Thornton
- * @copyright   2024 Jeremy Simon Thornton
+ * @copyright   2023, 2024, 2026 Jeremy Simon Thornton
  *
  * @url http://www.techhelpmanual.com/27-dos__bios___extensions_service_index.html
+ *
+ * @note Video BIOS is third-party vendor ROM code, unlike INT 21h, every function here guards BP and DS
+ * across the int call regardless of whether its own body needs them, because the risk is what BIOS
+ * might do to the *caller's* state on return, not what this function does.
+ * Some implementations (including the original IBM PC) have a bug which destroys BP.
+ * The Trident TVGA8900CL (BIOS dated 1992/9/8) clears DS to 0000h when scrolling in an SVGA mode (800x600 or higher)
  */
 #include "bios_video_services_constants.h"
 #include "bios_video_services.h"
@@ -16,12 +22,15 @@
 void  bios_set_video_mode(bios_byte_t mode) {
 	__asm {
 		.8086
+		push    bp
 		push    ds
 
+		mov     al, mode
 		mov		ah, BIOS_SET_VIDEO_MODE
 		int		BIOS_VIDEO_SERVICES
 
 		pop 	ds
+		pop     bp
 	}
 }
 
@@ -38,6 +47,7 @@ void  bios_set_video_mode(bios_byte_t mode) {
 void  bios_set_cursor_position(bios_byte_t x, bios_byte_t y) {
     __asm {
   		.8086
+        push    bp
   		push    ds
 
         mov     bh, 0
@@ -47,6 +57,7 @@ void  bios_set_cursor_position(bios_byte_t x, bios_byte_t y) {
   		int		BIOS_VIDEO_SERVICES
 
   		pop 	ds
+        pop     bp
     }
 }
 
@@ -65,6 +76,7 @@ void  bios_set_cursor_position(bios_byte_t x, bios_byte_t y) {
 void  bios_scroll_active_page_up(bios_byte_t nlines, bios_byte_t attr, bios_byte_t x1, bios_byte_t y1, bios_byte_t x2, bios_byte_t y2) {
     __asm {
   		.8086
+        push    bp
   		push    ds
 
   		mov		al, nlines
@@ -77,12 +89,14 @@ void  bios_scroll_active_page_up(bios_byte_t nlines, bios_byte_t attr, bios_byte
   		int		BIOS_VIDEO_SERVICES
 
   		pop     ds
+        pop     bp
 	}
 }
 
 void  bios_scroll_active_page_down(bios_byte_t nlines, bios_byte_t attr, bios_byte_t x1, bios_byte_t y1, bios_byte_t x2, bios_byte_t y2) {
     __asm {
         .8086
+        push    bp
         push    ds
 
         mov		al, nlines
@@ -95,6 +109,7 @@ void  bios_scroll_active_page_down(bios_byte_t nlines, bios_byte_t attr, bios_by
         int		BIOS_VIDEO_SERVICES
 
         pop 	ds
+        pop     bp
 	}
 }
 
@@ -120,6 +135,7 @@ void bios_get_video_state(bios_video_state_t* state) {
 		.8086
 		push    di
 		push    es
+		push    bp
 		push 	ds
 
 		mov	ah, BIOS_GET_CURRENT_VIDEO_STATE
@@ -130,6 +146,7 @@ void bios_get_video_state(bios_video_state_t* state) {
 		mov	es:[di + 2], bh			; display page
 
 		pop 	ds
+		pop     bp
 		pop     es
 		pop     di
 	}
@@ -167,6 +184,7 @@ bios_byte_t bios_return_video_configuration_information(bios_video_subsystem_con
 		.8086
 		push    di
 		push    es
+		push    bp
 		push 	ds
 
 		mov		ah, BIOS_VIDEO_SUBSYSTEM_CONFIGURATION
@@ -177,8 +195,10 @@ bios_byte_t bios_return_video_configuration_information(bios_video_subsystem_con
 		mov		es:[di + 1], bl				; EGA memory BL(0 = 64k, 2 = 128k, 2 = 192k, 3 = 256k)
 		mov		es:[di + 2], ch				; feature_bits(values of those RCA connectors)
 		mov		es:[di + 3], cl				; switch_settings
+		mov     al, bl
 
 		pop 	ds
+		pop     bp
 		pop     es
 		pop     di
 	}
@@ -275,9 +295,10 @@ bios_byte_t bios_return_video_configuration_information(bios_video_subsystem_con
 * @note Be sure to re-enable refresh when finished updating video memory.
 * -----------------------------------------------------------------------------------------------------
 */
-bios_byte_t bios_helper_video_subsytem_configuration(bios_byte_t request, bios_byte_t setting) {
+bios_byte_t bios_helper_video_subsystem_configuration(bios_byte_t request, bios_byte_t setting) {
 	__asm {
 		.8086
+		push    bp
 		push 	ds
 
 		mov		ah, BIOS_VIDEO_SUBSYSTEM_CONFIGURATION
@@ -286,6 +307,7 @@ bios_byte_t bios_helper_video_subsytem_configuration(bios_byte_t request, bios_b
 		int		BIOS_VIDEO_SERVICES
 
 		pop 	ds
+		pop     bp
 	}
 }
 
@@ -304,9 +326,8 @@ bios_byte_t bios_video_subsystem_configuration(bios_byte_t request, bios_byte_t 
 	case BIOS_CURSOR_EMULATION:
 	case BIOS_PS2_VIDEO_DISPLAY_SWITCHING:
 	case BIOS_VIDEO_REFRESH_CONTROL:
-		return bios_helper_video_subsytem_configuration(request, setting);
+		return bios_helper_video_subsystem_configuration(request, setting);
 	default:
 		return 0;
-		break;
 	}
 }

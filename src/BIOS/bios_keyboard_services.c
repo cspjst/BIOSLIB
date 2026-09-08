@@ -60,7 +60,7 @@ STORE:  stosb
 
 		pop 	ds
 		pop     es
-		pop     si
+		pop     di
 	}
 }
 

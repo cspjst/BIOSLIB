@@ -1,11 +1,11 @@
 /**
  * @author      Jeremy Simon Thornton
- * @copyright   2024 Jeremy Simon Thornton
+ * @copyright   2023, 2024 Jeremy Simon Thornton
  *
- * @brief      INT 10 - Video BIOS Services
- * @note	   Warning: Some BIOS implementations have a bug that causes register
- *			   BP to be destroyed.   It is advisable to save BP before a call to
- *		       Video BIOS routines on these systems.
+ * @brief INT 10 - Video BIOS Services
+ * @note Warning: Some BIOS implementations have a bug that causes register BP to be destroyed.
+ * It is advisable to save BP before a call to Video BIOS routines on these systems.
+ * @url http://www.ctyme.com/intr/rb-0097.htm
  */
 #ifndef BIOS_VIDEO_SERVICES_H
 #define	BIOS_VIDEO_SERVICES_H
@@ -25,9 +25,9 @@ void  bios_set_cursor_position(bios_byte_t x, bios_byte_t y);
 // INT 10,5 - Select active display page
 
 // INT 10,6 - Scroll active page up
-void  bios_scroll_active_page_up(bios_byte_t nlines, bios_byte_t attrib, bios_byte_t x1, bios_byte_t y1, bios_byte_t x2, bios_byte_t y2);
+void  bios_scroll_active_page_up(bios_byte_t nlines, bios_byte_t attr, bios_byte_t x1, bios_byte_t y1, bios_byte_t x2, bios_byte_t y2);
 // INT 10,7 - Scroll active page down
-void  bios_scroll_active_page_down(bios_byte_t nlines, bios_byte_t attrib, bios_byte_t x1, bios_byte_t y1, bios_byte_t x2, bios_byte_t y2);
+void  bios_scroll_active_page_down(bios_byte_t nlines, bios_byte_t attr, bios_byte_t x1, bios_byte_t y1, bios_byte_t x2, bios_byte_t y2);
 
 // INT 10,8 - Read character and attribute at cursor
 // INT 10,9 - Write character and attribute at cursor
@@ -56,7 +56,7 @@ bios_byte_t bios_video_subsystem_configuration(bios_byte_t request, bios_byte_t 
 	//bios_cursor_emulation
 	//bios_ps2_video_display_switching
 	//bios_video_refresh_control
-	bios_byte_t  bios_helper_video_subsytem_configuration(bios_byte_t request, bios_byte_t setting);
+	bios_byte_t  bios_helper_video_subsystem_configuration(bios_byte_t request, bios_byte_t setting);
 
 // INT 10,13 - Write string (BIOS after 1/10/86)
 // INT 10,14 - Load LCD char font (convertible)
