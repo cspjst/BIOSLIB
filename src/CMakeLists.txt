@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Toolchain (DOS / I86 / wcl) comes from cmk.sh -D flags.
-project(BIOSLIB VERSION 0.1.0 LANGUAGES C)
+project(BIOSLIB VERSION 0.9.1 LANGUAGES C)
 
 # --- Compiler options --------------------------------------------
 # Reference: https://users.pja.edu.pl/~jms/qnx/help/watcom/compiler-tools/cpopts.html

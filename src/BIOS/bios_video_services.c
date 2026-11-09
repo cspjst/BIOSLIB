@@ -19,7 +19,7 @@
 * AL = video_mode_t
 * @see bios_video_services_constants.h enum type
 */
-void  bios_set_video_mode(bios_byte_t mode) {
+void  bios_set_video_mode(uint8_t mode) {
 	__asm {
 		.8086
 		push    bp
@@ -44,7 +44,7 @@ void  bios_set_video_mode(bios_byte_t mode) {
  * - positions relative to 0,0 origin
  * - 80x25 uses coordinates 0,0 to 24,79;	40x25 uses 0,0 to 24,39
  */
-void  bios_set_cursor_position(bios_byte_t x, bios_byte_t y) {
+void  bios_set_cursor_position(uint8_t x, uint8_t y) {
     __asm {
   		.8086
         push    bp
@@ -73,7 +73,7 @@ void  bios_set_cursor_position(bios_byte_t x, bios_byte_t y) {
  *	DL = column of lower right corner of scroll window
  *	returns nothing
  */
-void  bios_scroll_active_page_up(bios_byte_t nlines, bios_byte_t attr, bios_byte_t x1, bios_byte_t y1, bios_byte_t x2, bios_byte_t y2) {
+void  bios_scroll_active_page_up(uint8_t nlines, uint8_t attr, uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2) {
     __asm {
   		.8086
         push    bp
@@ -93,7 +93,7 @@ void  bios_scroll_active_page_up(bios_byte_t nlines, bios_byte_t attr, bios_byte
 	}
 }
 
-void  bios_scroll_active_page_down(bios_byte_t nlines, bios_byte_t attr, bios_byte_t x1, bios_byte_t y1, bios_byte_t x2, bios_byte_t y2) {
+void  bios_scroll_active_page_down(uint8_t nlines, uint8_t attr, uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2) {
     __asm {
         .8086
         push    bp
@@ -179,7 +179,7 @@ void bios_get_video_state(bios_video_state_t* state) {
 *
 *  @note If upon return from this call, BL>4, then must be running on a CGA or MDA (not an EGA or VGA).
 */
-bios_byte_t bios_return_video_configuration_information(bios_video_subsystem_config_t* config) {
+uint8_t bios_return_video_configuration_information(bios_video_subsystem_config_t* config) {
 	__asm {
 		.8086
 		push    di
@@ -295,7 +295,7 @@ bios_byte_t bios_return_video_configuration_information(bios_video_subsystem_con
 * @note Be sure to re-enable refresh when finished updating video memory.
 * -----------------------------------------------------------------------------------------------------
 */
-bios_byte_t bios_helper_video_subsystem_configuration(bios_byte_t request, bios_byte_t setting) {
+uint8_t bios_helper_video_subsystem_configuration(uint8_t request, uint8_t setting) {
 	__asm {
 		.8086
 		push    bp
@@ -314,7 +314,7 @@ bios_byte_t bios_helper_video_subsystem_configuration(bios_byte_t request, bios_
 /**
 * @brief INT 10,12 - Video Subsystem Configuration (EGA/VGA)
 */
-bios_byte_t bios_video_subsystem_configuration(bios_byte_t request, bios_byte_t setting, bios_video_subsystem_config_t* config) {
+uint8_t bios_video_subsystem_configuration(uint8_t request, uint8_t setting, bios_video_subsystem_config_t* config) {
 	switch (request) {
 	case BIOS_RETURN_VIDEO_CONFIGURATION_INFORMATION:	// the odd one out of the sub-functions
 		return bios_return_video_configuration_information(config);
