@@ -12,6 +12,7 @@
 #include "../BIOS/bios_video_services_constants.h"
 #include "../BIOS/bios_clock_services.h"
 #include "../BIOS/bios_clock_constants.h"
+#include "../BIOS/bios_version.h"
 
 void test_bios_memory() {
     printf("Testing BIOS memory functions...\n");
@@ -278,5 +279,5 @@ void test_bios() {
     test_bios_scroll();
     test_bios_video();
     test_bios_cls();
-
+    printf("BIOSLIB v %s Pass.", bios_version_string());
 }
